@@ -11,10 +11,14 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBit
 
 // Lista de cargos de cores e seus respectivos nomes
 const COLORS = {
-  amarelo: 'CargoID_Amarelo',
-  azul: 'CargoID_Azul',
-  vermelho: 'CargoID_Vermelho',
-  verde: 'CargoID_Verde',
+  amarelo: '700353209595592744',
+  azul: '700351689768566865',
+  vermelho: '700353041358127124',
+  laranja: '700366271291719700',
+  preto: '700355920001237002',
+  rosa: '700355451010809950',
+  roxo: '700353619811106847',
+  
   // Adicione mais cores conforme necessário
 };
 
@@ -33,7 +37,10 @@ const commands = [
           { name: 'Amarelo', value: 'amarelo' },
           { name: 'Azul', value: 'azul' },
           { name: 'Vermelho', value: 'vermelho' },
-          { name: 'Verde', value: 'verde' },
+          { name: 'laranja', value: 'laranja' },
+          { name: 'preto', value: 'preto' },
+          { name: 'rosa', value: 'rosa' },
+          { name: 'roxo', value: 'roxo' },
         ],
       },
     ],
