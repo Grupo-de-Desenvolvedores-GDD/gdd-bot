@@ -1,5 +1,13 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const axios = require('axios'); // Usaremos para fazer a chamada à API
+const { Configuration, OpenAIApi } = require('openai');
+
+const openaiApiKey = process.env.OPENAI_API_KEY;
+
+const configuration = new Configuration({
+  apiKey: openaiApiKey,
+});
+
+const openai = new OpenAIApi(configuration);
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -19,30 +27,17 @@ module.exports = {
 
     try {
       // Faz a chamada para a API da OpenAI
-      const response = await axios.post(
-        'https://api.openai.com/v1/chat/completions',
-        {
-          model: 'gpt-3.5-turbo',
-          messages: [{ role: 'user', content: mensagem }],
-          max_tokens: 200,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`, // Certifique-se de adicionar sua chave da API no .env
-          },
-        }
-      );
+      const response = await openai.createCompletion({
+        model: 'text-davinci-003', // ou 'gpt-3.5-turbo' ou outro modelo
+        prompt: prompt,
+        max_tokens: 150,
+      });
 
-      const respostaDaIA = response.data.choices[0].message.content;
-
-      // Envia a resposta da IA
-      await interaction.editReply(`🤖 **Resposta da IA:**\n${respostaDaIA}`);
+      // Envia a resposta da IA no Discord
+      message.reply(response.data.choices[0].text.trim());
     } catch (error) {
-      console.error('Erro ao conectar com a API da OpenAI:', error);
-      await interaction.editReply(
-        '⚠️ Ocorreu um erro ao tentar conversar com a IA. Tente novamente mais tarde!'
-      );
+      console.error('Erro ao interagir com a API da OpenAI:', error);
+      message.reply('Houve um erro ao tentar responder sua mensagem.');
     }
   },
 };
