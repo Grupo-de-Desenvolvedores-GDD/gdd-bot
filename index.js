@@ -24,12 +24,16 @@ const rest = new REST({ version: '10' }).setToken(TOKEN);
 
 (async () => {
   try {
-    console.log('🔄 Atualizando comandos...');
+    console.log('🔄 Removendo comandos antigos...');
+    await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), { body: [] });
+    console.log('✅ Comandos antigos removidos.');
+
+    console.log('🔄 Registrando novos comandos...');
     const commands = client.commands.map(cmd => cmd.data.toJSON());
     await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), { body: commands });
-    console.log('✅ Comandos registrados com sucesso!');
+    console.log('✅ Novos comandos registrados com sucesso!');
   } catch (error) {
-    console.error('Erro ao registrar comandos:', error);
+    console.error('Erro ao atualizar comandos:', error);
   }
 })();
 
