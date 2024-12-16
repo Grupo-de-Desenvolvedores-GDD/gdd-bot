@@ -10,6 +10,8 @@ const GUILD_ID = process.env.GUILD_ID;
 // Inicializa o cliente do Discord
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers] });
 
+client.pendingTpRequests = new Map();
+
 // Carrega os comandos dinamicamente
 client.commands = new Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
