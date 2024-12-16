@@ -277,6 +277,14 @@ const randomResponses = [
   "sim, vai nessa",
 ];
 
+const randomUserIds = [
+  '335024452742152204', // Substitua por IDs reais de usuários
+  '561051867191443477', // Substitua por IDs reais de usuários
+  '685562331350040605',
+  '261936490702045186',
+  '288448920949096458',// Substitua por IDs reais de usuários
+];
+
 // Evento de mensagens
 client.on("messageCreate", (message) => {
   // Ignora mensagens de bots
@@ -287,6 +295,10 @@ client.on("messageCreate", (message) => {
     const randomResponse =
       randomResponses[Math.floor(Math.random() * randomResponses.length)];
     message.reply(randomResponse).catch(console.error);
+  }
+
+  if (randomUserIds.includes(message.author.id) && Math.random() < 0.2) {
+    message.reply("*- disse a putinha*").catch(console.error);
   }
 });
 
