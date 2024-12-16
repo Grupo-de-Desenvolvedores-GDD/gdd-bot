@@ -43,35 +43,6 @@ const rest = new REST({ version: '10' }).setToken(TOKEN);
 client.once('ready', () => {
   console.log(`🤖 Bot conectado como ${client.user.tag}`);
 });
-
-const randomResponses = [
-  "Talvez.",
-  "Com certeza!",
-  "Eu não sei... 🤔",
-  "Pergunte novamente mais tarde.",
-  "Definitivamente não.",
-  "A resposta está nos astros.",
-  "Sim, mas só às vezes.",
-  "Eu acho que sim.",
-  "Provavelmente não.",
-  "Quem sabe?",
-  "sei la pohakkkkkkk"
-];
-
-// Listener para mensagens enviadas no servidor
-client.on('messageCreate', async (message) => {
-  // Ignora mensagens do próprio bot ou de outros bots
-  if (message.author.bot) return;
-
-  // Verifica se a mensagem termina com "?"
-  if (message.content.trim().endsWith('?')) {
-    // Escolhe uma resposta aleatória
-    const randomResponse = randomResponses[Math.floor(Math.random() * randomResponses.length)];
-    // Responde à mensagem
-    await message.reply(randomResponse);
-  }
-});
-
 // Listener para interações de comandos
 client.on('interactionCreate', async interaction => {
   if (interaction.isChatInputCommand()) {
@@ -122,6 +93,34 @@ client.on('interactionCreate', async interaction => {
       // Remove o pedido de teleportação
       client.pendingTpRequests.delete(destinoId);
     }
+  }
+});
+
+const randomResponses = [
+  "Talvez.",
+  "Com certeza!",
+  "Eu não sei... 🤔",
+  "Pergunte novamente mais tarde.",
+  "Definitivamente não.",
+  "A resposta está nos astros.",
+  "Sim, mas só às vezes.",
+  "Eu acho que sim.",
+  "Provavelmente não.",
+  "Quem sabe?",
+  "sei la pohakkkkkkk"
+];
+
+// Listener para mensagens enviadas no servidor
+client.on('messageCreate', async (message) => {
+  // Ignora mensagens do próprio bot ou de outros bots
+  if (message.author.bot) return;
+
+  // Verifica se a mensagem termina com "?"
+  if (message.content.trim().endsWith('?')) {
+    // Escolhe uma resposta aleatória
+    const randomResponse = randomResponses[Math.floor(Math.random() * randomResponses.length)];
+    // Responde à mensagem
+    await message.reply(randomResponse);
   }
 });
 
