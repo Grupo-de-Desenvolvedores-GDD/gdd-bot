@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const axios = require('axios'); // Usaremos para fazer a chamada à API
-require('dotenv').config(); // Certifique-se de que sua chave da API esteja no .env
 
 module.exports = {
   data: new SlashCommandBuilder()
