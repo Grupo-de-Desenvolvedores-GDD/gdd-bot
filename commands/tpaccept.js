@@ -9,7 +9,7 @@ module.exports = {
     const destinoId = interaction.user.id;
 
     if (!interaction.client.pendingTpRequests.has(destinoId)) {
-      return;
+      return
     }
 
     const origemId = interaction.client.pendingTpRequests.get(destinoId);
