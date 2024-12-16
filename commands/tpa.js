@@ -15,6 +15,7 @@ module.exports = {
     const destino = interaction.options.getUser('destino');
     const origem = interaction.user;
 
+    // Verifica se o jogador não está tentando se teleportar para si mesmo
     if (destino.id === origem.id) {
       return interaction.reply('Você não pode se teleportar para si mesmo!');
     }
@@ -24,29 +25,29 @@ module.exports = {
       return interaction.reply(`${destino.username} já tem uma solicitação pendente!`);
     }
 
-    // Envia o pedido de teleportação
+    // Cria uma linha de ação com os botões "Aceitar" e "Recusar"
     const row = new MessageActionRow()
       .addComponents(
         new MessageButton()
           .setCustomId('tpaccept')
           .setLabel('Aceitar Teleporte')
-          .setStyle('PRIMARY')
-          .setDisabled(false),
+          .setStyle('PRIMARY'),
         new MessageButton()
           .setCustomId('tpdeny')
           .setLabel('Recusar Teleporte')
           .setStyle('DANGER')
-          .setDisabled(false)
       );
 
-    // Armazena a solicitação pendente
+    // Armazena a solicitação pendente no Map
     interaction.client.pendingTpRequests.set(destino.id, origem.id);
 
+    // Envia a solicitação de teleporte para o jogador de destino
     await destino.send({
       content: `${origem.username} deseja se teleportar para você. Você aceita?`,
-      components: [row]
+      components: [row],
     });
 
+    // Responde para o jogador que fez a solicitação
     return interaction.reply(`Solicitação de teleporte enviada para ${destino.username}. Aguardando resposta...`);
   },
 };
