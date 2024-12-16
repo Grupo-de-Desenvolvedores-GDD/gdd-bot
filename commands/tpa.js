@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js'); // Alteração aqui
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -25,25 +25,22 @@ module.exports = {
     client.pendingTpRequests.set(jogador.id, interaction.user.id);
 
     // Cria os botões para aceitar ou recusar o pedido de teleporte
-    const row = new ActionRowBuilder()  // Alteração aqui
+    const row = new ActionRowBuilder()
       .addComponents(
-        new ButtonBuilder()  // Alteração aqui
+        new ButtonBuilder()
           .setCustomId('tpaccept')
           .setLabel('Aceitar')
-          .setStyle(ButtonStyle.Success), // Alteração aqui
-        new ButtonBuilder()  // Alteração aqui
+          .setStyle(ButtonStyle.Success),
+        new ButtonBuilder()
           .setCustomId('tpdeny')
           .setLabel('Recusar')
-          .setStyle(ButtonStyle.Danger) // Alteração aqui
+          .setStyle(ButtonStyle.Danger)
       );
 
-    // Envia a mensagem com os botões para o jogador solicitado
-    await jogador.send({
-      content: `${interaction.user.username} pediu para teleportar-se até você!`,
-      components: [row]
+    // Envia a mensagem com os botões no canal onde o comando foi invocado
+    await interaction.reply({
+      content: `${interaction.user.username} pediu para teleportar-se até ${jogador.username}.`,
+      components: [row],
     });
-
-    // Responde ao jogador que fez a solicitação
-    await interaction.reply(`Pedido de teleporte enviado para ${jogador.username}.`);
   },
 };
