@@ -1,5 +1,5 @@
 // Importa as dependências necessárias
-const { Client, GatewayIntentBits, REST, Routes, Collection } = require('discord.js');
+const { Client, GatewayIntentBits, REST, Routes, Collection, MessageActionRow, MessageButton } = require('discord.js');
 const fs = require('fs');
 require('dotenv').config();
 
@@ -46,16 +46,54 @@ client.once('ready', () => {
 
 // Listener para interações de comandos
 client.on('interactionCreate', async interaction => {
-  if (!interaction.isChatInputCommand()) return;
+  if (interaction.isChatInputCommand()) {
+    const command = client.commands.get(interaction.commandName);
+    if (!command) return;
 
-  const command = client.commands.get(interaction.commandName);
-  if (!command) return;
- console.log(`Comando executado: /${interaction.commandName} por ${interaction.user.tag} no servidor ${interaction.guild?.name || 'DM'}`);
-  try {
-    await command.execute(interaction);
-  } catch (error) {
-    console.error(`Erro ao executar o comando ${interaction.commandName}:`, error);
-    await interaction.reply({ content: 'Houve um erro ao executar este comando.', ephemeral: true });
+    console.log(`Comando executado: /${interaction.commandName} por ${interaction.user.tag} no servidor ${interaction.guild?.name || 'DM'}`);
+    try {
+      await command.execute(interaction);
+    } catch (error) {
+      console.error(`Erro ao executar o comando ${interaction.commandName}:`, error);
+      await interaction.reply({ content: 'Houve um erro ao executar este comando.', ephemeral: true });
+    }
+  }
+
+  // Captura interações de botões (aceitar ou recusar o teleporte)
+  if (interaction.isButton()) {
+    if (interaction.customId === 'tpaccept') {
+      const destinoId = interaction.user.id;
+      if (!client.pendingTpRequests.has(destinoId)) {
+        return interaction.reply('Você não tem nenhum pedido de teleporte pendente.');
+      }
+
+      const origemId = client.pendingTpRequests.get(destinoId);
+      const origem = await client.users.fetch(origemId);
+
+      // Aqui você implementaria a lógica de teleporte para o jogador 'origem'
+
+      await origem.send(`${interaction.user.username} aceitou seu pedido de teleporte!`);
+      await interaction.reply(`Você aceitou o pedido de teleporte de ${origem.username}.`);
+
+      // Remove o pedido de teleportação
+      client.pendingTpRequests.delete(destinoId);
+    }
+
+    if (interaction.customId === 'tpdeny') {
+      const destinoId = interaction.user.id;
+      if (!client.pendingTpRequests.has(destinoId)) {
+        return interaction.reply('Você não tem nenhum pedido de teleporte pendente.');
+      }
+
+      const origemId = client.pendingTpRequests.get(destinoId);
+      const origem = await client.users.fetch(origemId);
+
+      await origem.send(`${interaction.user.username} recusou seu pedido de teleporte.`);
+      await interaction.reply(`Você recusou o pedido de teleporte de ${origem.username}.`);
+
+      // Remove o pedido de teleportação
+      client.pendingTpRequests.delete(destinoId);
+    }
   }
 });
 
