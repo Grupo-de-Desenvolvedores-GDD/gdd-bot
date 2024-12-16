@@ -3,11 +3,10 @@ const { Configuration, OpenAIApi } = require('openai');
 
 const openaiApiKey = process.env.OPENAI_API_KEY;
 
-const configuration = new Configuration({
+
+const openai = new OpenAI({
   apiKey: openaiApiKey,
 });
-
-const openai = new OpenAIApi(configuration);
 
 module.exports = {
   data: new SlashCommandBuilder()
