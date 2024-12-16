@@ -44,7 +44,7 @@ client.on('interactionCreate', async interaction => {
 
   const command = client.commands.get(interaction.commandName);
   if (!command) return;
-
+ console.log(`Comando executado: /${interaction.commandName} por ${interaction.user.tag} no servidor ${interaction.guild?.name || 'DM'}`);
   try {
     await command.execute(interaction);
   } catch (error) {
