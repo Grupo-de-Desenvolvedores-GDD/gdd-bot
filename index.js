@@ -18,7 +18,8 @@ const COLORS = {
   preto: '700355920001237002',
   rosa: '700355451010809950',
   roxo: '700353619811106847',
-  
+  branco: '1317897239821025320',
+  verde: '1318273145567973508',
   // Adicione mais cores conforme necessário
 };
 
@@ -37,13 +38,19 @@ const commands = [
           { name: 'Amarelo', value: 'amarelo' },
           { name: 'Azul', value: 'azul' },
           { name: 'Vermelho', value: 'vermelho' },
-          { name: 'laranja', value: 'laranja' },
-          { name: 'preto', value: 'preto' },
-          { name: 'rosa', value: 'rosa' },
-          { name: 'roxo', value: 'roxo' },
+          { name: 'Laranja', value: 'laranja' },
+          { name: 'Preto', value: 'preto' },
+          { name: 'Rosa', value: 'rosa' },
+          { name: 'Roxo', value: 'roxo' },
+          { name: 'Branco', value: 'branco' },
+          { name: 'Verde', value: 'verde' },
         ],
       },
     ],
+  },
+  {
+    name: 'removercor',
+    description: 'Remove a cor atual no servidor.',
   },
 ];
 
@@ -70,15 +77,24 @@ client.on('interactionCreate', async interaction => {
 
   const { commandName, options, member } = interaction;
 
+  if (!member || !(member instanceof GuildMember)) {
+    return interaction.reply({ content: 'Não foi possível identificar o membro.', ephemeral: true });
+  }
+
+  const guildMember = member;
+
+  // Verifica se o bot tem permissão para modificar os cargos do usuário
+  const botRole = guildMember.guild.members.me.roles.highest;
+  const memberHighestRole = guildMember.roles.highest;
+
+  if (botRole.comparePositionTo(memberHighestRole) <= 0) {
+    return interaction.reply({ content: 'Eu não tenho permissão para modificar os seus cargos.', ephemeral: true });
+  }
+
+  const roleIds = Object.values(COLORS);
+
   if (commandName === 'cor') {
     const cor = options.getString('cor', true);
-
-    if (!member || !(member instanceof GuildMember)) {
-      return interaction.reply({ content: 'Não foi possível alterar sua cor.', ephemeral: true });
-    }
-
-    const roleIds = Object.values(COLORS);
-    const guildMember = member;
 
     // Remove os cargos de cor atuais
     const rolesToRemove = guildMember.roles.cache.filter(role => roleIds.includes(role.id));
@@ -94,6 +110,14 @@ client.on('interactionCreate', async interaction => {
     } else {
       await interaction.reply({ content: 'Cor inválida!', ephemeral: true });
     }
+  } else if (commandName === 'removercor') {
+    // Remove os cargos de cor atuais
+    const rolesToRemove = guildMember.roles.cache.filter(role => roleIds.includes(role.id));
+    for (const role of rolesToRemove.values()) {
+      await guildMember.roles.remove(role);
+    }
+
+    await interaction.reply({ content: 'Sua cor foi removida com sucesso!', ephemeral: true });
   }
 });
 
