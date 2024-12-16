@@ -18,6 +18,9 @@ module.exports = {
       return interaction.reply('Você não pode se teletransportar para si mesmo!');
     }
 
+    // Acesse o client do arquivo index.js
+    const client = interaction.client;
+
     // Armazena a solicitação de teleporte
     client.pendingTpRequests.set(jogador.id, interaction.user.id);
 
