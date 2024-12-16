@@ -9,7 +9,7 @@ module.exports = {
     const destinoId = interaction.user.id;
 
     if (!interaction.client.pendingTpRequests.has(destinoId)) {
-      return interaction.reply('Você não tem nenhum pedido de teleporte pendente.');
+      return interaction.reply({ content: 'Você não tem nenhum pedido de teleporte pendente.', ephemeral: true });
     }
 
     const origemId = interaction.client.pendingTpRequests.get(destinoId);
@@ -19,7 +19,7 @@ module.exports = {
     await origem.send(`${interaction.user.username} recusou seu pedido de teleporte.`);
 
     // Envia confirmação para o jogador que recusou
-    await interaction.reply(`Você recusou o pedido de teleporte de ${origem.username}.`);
+    await interaction.reply({ content: `Você recusou o pedido de teleporte de ${origem.username}.`, ephemeral: true });
 
     // Remove o pedido de teleportação
     interaction.client.pendingTpRequests.delete(destinoId);
