@@ -97,17 +97,13 @@ client.on('interactionCreate', async interaction => {
 });
 
 const randomResponses = [
-  "Talvez.",
-  "Com certeza!",
-  "Eu não sei... 🤔",
-  "Pergunte novamente mais tarde.",
-  "Definitivamente não.",
-  "A resposta está nos astros.",
-  "Sim, mas só às vezes.",
-  "Eu acho que sim.",
-  "Provavelmente não.",
-  "Quem sabe?",
-  "sei la pohakkkkkkk"
+  "se está usando wlib, sim!",
+  "não",
+  "sim",
+  "pergunte novamente mais tarde",
+  "sei la pohakkkkkkk",
+  "será?",
+  "?"
 ];
 
 // Listener para mensagens enviadas no servidor
