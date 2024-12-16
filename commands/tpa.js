@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageActionRow, MessageButton } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js'); // Alteração aqui
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -25,16 +25,16 @@ module.exports = {
     client.pendingTpRequests.set(jogador.id, interaction.user.id);
 
     // Cria os botões para aceitar ou recusar o pedido de teleporte
-    const row = new MessageActionRow()
+    const row = new ActionRowBuilder()  // Alteração aqui
       .addComponents(
-        new MessageButton()
+        new ButtonBuilder()  // Alteração aqui
           .setCustomId('tpaccept')
           .setLabel('Aceitar')
-          .setStyle('SUCCESS'),
-        new MessageButton()
+          .setStyle(ButtonStyle.Success), // Alteração aqui
+        new ButtonBuilder()  // Alteração aqui
           .setCustomId('tpdeny')
           .setLabel('Recusar')
-          .setStyle('DANGER')
+          .setStyle(ButtonStyle.Danger) // Alteração aqui
       );
 
     // Envia a mensagem com os botões para o jogador solicitado
