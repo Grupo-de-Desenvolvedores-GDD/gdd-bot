@@ -290,7 +290,7 @@ client.on("messageCreate", (message) => {
   if (message.author.bot) return;
 
   // Verifica se a mensagem termina com "?" e tem 20% de chance de responder
-  if (message.content.trim().endsWith("?") && Math.random() < 0.4) {
+  if ((message.content.trim().endsWith("?") && (Math.random() < 0.4)) || (message.content.trim().endsWith("?") && message.mentions.has(client.user))) {
     const randomResponse =
       randomResponses[Math.floor(Math.random() * randomResponses.length)];
     message.reply(randomResponse).catch(console.error);
