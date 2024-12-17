@@ -296,7 +296,7 @@ client.on("messageCreate", (message) => {
     message.reply(randomResponse).catch(console.error);
   }
 
-  if (randomUserIds.includes(message.author.id) && Math.random() < 0.2) {
+  if (randomUserIds.includes(message.author.id) && Math.random() < 0.05) {
     message.reply("*- disse a putinha*").catch(console.error);
   }
 });
