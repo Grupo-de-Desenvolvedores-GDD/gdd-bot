@@ -200,7 +200,6 @@ const randomResponses = [
   "claro que sim, só que não",
   "não confio nessa pergunta",
   "tu sabe a resposta, né?",
-  "kkk eu rio pra não chorar",
   "pode ser, mas e se não for?",
   "a resposta tá dentro de você",
   "ai ai... complicado",
