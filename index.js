@@ -277,11 +277,10 @@ const randomResponses = [
 ];
 
 const randomUserIds = [
-  '335024452742152204', // Substitua por IDs reais de usuários
-  '561051867191443477', // Substitua por IDs reais de usuários
-  '685562331350040605',
-  '261936490702045186',
-  '288448920949096458',// Substitua por IDs reais de usuários
+  '335024452742152204',
+  '288448920949096458',
+  '308716662625009702',
+  '561051867191443477'// Substitua por IDs reais de usuários// Substitua por IDs reais de usuários
 ];
 
 // Evento de mensagens
