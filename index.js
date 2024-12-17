@@ -63,7 +63,7 @@ client.on('interactionCreate', async interaction => {
     if (interaction.customId === 'tpaccept') {
       const destinoId = interaction.user.id;
       if (!client.pendingTpRequests.has(destinoId)) {
-        return interaction.reply('Você não tem nenhum pedido de teleporte pendente.');
+        return;
       }
 
       const origemId = client.pendingTpRequests.get(destinoId);
@@ -81,7 +81,7 @@ client.on('interactionCreate', async interaction => {
     if (interaction.customId === 'tpdeny') {
       const destinoId = interaction.user.id;
       if (!client.pendingTpRequests.has(destinoId)) {
-        return interaction.reply('Você não tem nenhum pedido de teleporte pendente.');
+        return;
       }
 
       const origemId = client.pendingTpRequests.get(destinoId);
