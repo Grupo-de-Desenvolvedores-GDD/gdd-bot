@@ -1,11 +1,11 @@
 import settings from "../../settings.json" with { type: "json" };
-import { envSchema, type EnvSchema } from "./env.ts";
+import { envSchema, type EnvSchema } from "./env.js";
 import { brBuilder } from "@magicyan/discord";
 import chalk from "chalk";
 import log from "consola";
 
-export * from "./error.ts";
-import "./global.ts";
+export * from "./error.js";
+import "./global.js";
 
 export { settings, log };
 
